@@ -140,14 +140,23 @@
   .tools svg{width:12pt;height:12pt}
 
   /* ── print ─────────────────────────────────────────── */
-  @page{size:A4;margin:0}
+  @page{size:A4;margin:12mm 0}
   @media print{
     html,body{background:#fff}
-    body{padding:0;font-size:9.3pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .sheet{width:auto;min-height:0;margin:0;box-shadow:none;padding:12mm 14mm 10mm}
+    body{padding:0;font-size:9.3pt;orphans:2;widows:2;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .sheet{width:auto;min-height:0;margin:0;box-shadow:none;padding:0 14mm}
     .tools{display:none!important}
     a{color:inherit}
-    .job,.item,.block{break-inside:avoid}
+    /* let tall containers flow across pages */
+    .job,.block,.cols,main,aside{break-inside:auto}
+    /* keep small units intact */
+    li,.item,.tr,.tags,.facts,.early li{break-inside:avoid}
+    /* never orphan a heading at the foot of a page */
+    h2,h3,.sub{break-after:avoid;break-inside:avoid}
+    .meta,.lead{break-after:avoid}
+    header,.bar{break-inside:avoid;break-after:avoid}
+    footer{break-before:avoid}
   }
   @media(max-width:820px){
     body{padding:12px 10px 40px}
